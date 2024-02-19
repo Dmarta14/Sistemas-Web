@@ -54,7 +54,7 @@ def guardarEnFichero():
     global id_del_canal
     global api_key_write
     print('aa')
-    with open('datos.txt','a') as archivo_txt:
+    with open('datos.txt', 'a') as archivo_txt:
         print('cc')
         print(id_del_canal)
         if id_del_canal:
