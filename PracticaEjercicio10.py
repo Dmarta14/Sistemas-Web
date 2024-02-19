@@ -4,7 +4,6 @@ import json
 USER_API_KEY = 'X4HZIY3C1VAUHJFD'
 id_del_canal = None
 api_key_write = None
-
 def create_channel():
     global id_del_canal
     global api_key_write
@@ -32,9 +31,11 @@ def create_channel():
     descripcion = respuesta.reason
     print(str(codigo)+ " " + str(descripcion))
 
-    if codigo == 402 and 'maximum allowed channels reached' in descripcion.lower():
-        print("Se ha superado el número máximo de canales permitidos por la cuenta de usuario")
+    if codigo == 402:
+        print("Se ha superado el número máximo de canales permitidos por la cuenta de usuario.\n"
+              "Debes borrar un canal en Thingspeak o aumetar tu cuota\n")
         return
+
     elif codigo == 200:
 
         cuerpo = respuesta.content
