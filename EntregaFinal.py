@@ -1,3 +1,10 @@
+
+        #Diego Marta Hurtado
+        #GRUPO: 2
+        #FECHA:20/02/2024
+        #NOMBRE DE LA TAREA: Primera parte laboratorio 1
+        #Este código corresponde a la primera parte del laboratorio 1
+    
 import requests
 import urllib.parse
 import json
@@ -46,7 +53,7 @@ def crear_canal():
     elif codigo == 200:
 
         cuerpo = respuesta.content
-        #print(cuerpo)
+        
 
         datos = json.loads(cuerpo)
         print(datos)
@@ -58,6 +65,7 @@ def crear_canal():
         print(id_del_canal)
         print(api_key_write)
         guardarEnFichero()
+
 def guardarEnFichero():
     global id_del_canal
     global api_key_write
@@ -121,6 +129,7 @@ def enviar_datos_cpu_ram():
     enviar_pet(cpu_str, ram_str)
     print("CPU: %" + cpu_str + "\tRAM: %" + ram_str)
     time.sleep(15)
+
 def enviar_pet(param1, param2):
 
     metodo = 'POST'
@@ -139,6 +148,7 @@ def limpiar_canal():
     cabeceras = {'Host': 'api.thingspeak.com', 'Content-Type': 'application/x-www-form-urlencoded'}
     cuerpo = {'api_key': USER_API_KEY}
     requests.request(metodo, uri, data=cuerpo, headers=cabeceras, allow_redirects=False)
+
 def obtener_valores():
     metodo = 'GET'
     uri = "https://api.thingspeak.com/channels/" + str(id_del_canal) + "/feeds.json"
