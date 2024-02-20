@@ -27,7 +27,8 @@ def crear_canal():
     cuerpo = {'api_key': USER_API_KEY,
               'name' : 'MiCanal',
               'field1' : '%CPU',
-              'field2' : '%RAM'}
+              'field2' : '%RAM',
+              'public_flag': 1}
     cuerpo_encoded = urllib.parse.urlencode(cuerpo)
     print(cuerpo_encoded)
     cabeceras['Content-Length'] = str(len(cuerpo_encoded))
