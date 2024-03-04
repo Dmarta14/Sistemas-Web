@@ -1,0 +1,63 @@
+<!-- 
+        Diego Marta Hurtado
+        GRUPO: 2
+        FECHA:20/02/2024
+        NOMBRE DE LA TAREA: Segunda parte laboratorio 1
+        Este código corresponde a la segunda parte del laboratorio 1
+    -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(feedsData);
+
+        function feedsData() {
+            var xhttp = new XMLHttpRequest();
+            var uri = "https://api.thingspeak.com/channels/2439741/feeds.json";
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var responseData = JSON.parse(xhttp.responseText);
+                    drawChart(responseData.feeds);
+                };
+            };
+            xhttp.open("GET", uri, true);
+            xhttp.send();
+        };
+
+        function drawChart(data) {
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn('string', 'Timestamp');
+            dataTable.addColumn('number', '%CPU');
+            dataTable.addColumn('number', '%RAM');
+
+            for (var i = 0; i < data.length; i++) {
+                var entry = data[i];
+                var timestamp = entry.created_at;
+                var cpu = parseFloat(entry.field1);
+                var ram = parseFloat(entry.field2);
+                dataTable.addRow([timestamp, cpu, ram]);
+            }
+
+            var options = {
+                title: 'Computer performance',
+                legend: { position: 'bottom' },
+                curveType: 'function',
+                colors: ['red', 'blue'],
+                series: { 0: { targetAxisIndex: 0 }, 1: { targetAxisIndex: 1 } },
+                vAxes: { 0: { title: '%CPU' }, 1: { title: '%RAM' } }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(dataTable, options);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="chart_div" style="width: 100%; height: 500px;"></div>
+</body>
+
+</html>
